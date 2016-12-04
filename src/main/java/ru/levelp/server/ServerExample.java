@@ -19,6 +19,7 @@ public class ServerExample {
     }
 
     private void go() {
+
         try {
             ServerSocket serverSocket = new ServerSocket(7071);
             System.out.println("Server started...");
@@ -64,6 +65,7 @@ public class ServerExample {
     }
 
     public void disconnectClient(ClientHandler clientHandler) {
+
         clients.remove(clientHandler);
     }
 
@@ -74,6 +76,30 @@ public class ServerExample {
 /*
 -сделать прием через json
 -чистить сообщения клиента из очереди отпраки
+
+-Mongo
+
+-    /*
+    1) Все запросы, передаваемые между клиентом и сервером должны быть в формате json
+    2) Структура запроса:
+        sender
+        receiver
+        body
+        timestamp
+    3) Сохранение сообщений в БД (только сообщения между пользователями)
+    4) Получение клиентом истории от сервера:
+        sender = name
+        receiver = server
+        body = getHistory
+        timestamp = now
+     */
+
+/*ДОМАШНЕЕ ЗАДАНИЕ:
+как удалять оптимально по id (session.load(User.class, id) - получение по id)
+в чат в класс сообщений добавить поле время когда отправлено
+-запрос не считается сообщением и не записывается в БД.
+-(при отправке серсером ответа на запрос местами меняются sender и recipient(в body всю историю которую нужно отправить)
+
 
 
 

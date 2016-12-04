@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import ru.levelp.json_serializator.JsonSerializator;
 import ru.levelp.message.Message;
+import ru.levelp.message.MessageService;
 
 import static java.lang.System.in;
 import static java.lang.System.setOut;
@@ -42,17 +43,17 @@ public class ClientHandler extends Thread {
                 if (userMessage.getBody().equals("authorizationMessage")) {
                     server.writeClientsMap(userMessage.getLogin(), this);
                 }
+                if ((userMessage.getReceiver().equals("server")) && (userMessage.getBody().equals("get HM"))) {
+                    new MessageService().getMessagesByLogin(userMessage.getLogin());
+                }
                 if (userMessage.getReceiver().equals("") && (!(userMessage.getBody().equals("authorizationMessage")))) {
-
                     server.sendToAll(inputMessage, this);
+                    new MessageService().addMassage(userMessage);
 
-//                    server.sendToAll(userMessage.getBody(), this);
-
-                } if((!userMessage.getReceiver().equals("")) && (!userMessage.getBody().equals("authorizationMessage"))) {
-
+                } if((!userMessage.getReceiver().equals("")) && (!userMessage.getBody().equals("authorizationMessage")) &&
+                        (!userMessage.getBody().equals("get HM"))) {
                     server.sendToOne(inputMessage, userMessage.getReceiver());
-
-//                    server.sendToOne(userMessage.getBody(), userMessage.getReceiver());
+                    new MessageService().addMassage(userMessage);
                 }
             }
             server.disconnectClient(this);

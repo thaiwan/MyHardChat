@@ -12,7 +12,6 @@ import java.net.Socket;
 public class JsonSerializator {
 
     Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()
             .create();
 
@@ -22,6 +21,7 @@ public class JsonSerializator {
     }
 
     public Message desesializeToMessage (String jsonMessage) {
+        System.out.println("jsonMessage - "  + jsonMessage);
         Message parsedMessage = gson.fromJson(jsonMessage, Message.class);
         return parsedMessage;
     }

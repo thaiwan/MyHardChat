@@ -1,5 +1,7 @@
 package ru.levelp.server;
 
+import ru.levelp.json_serializator.JsonSerializator;
+
 import java.io.PrintWriter;
 import java.util.PriorityQueue;
 
@@ -33,6 +35,7 @@ public class SenderWorker extends Thread {
     public void addMessage(String message) {
         queue.add(message);
     }
+
 
     public void stopWorker() {
         if (isAlive() && alive) {

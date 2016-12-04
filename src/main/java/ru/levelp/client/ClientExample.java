@@ -1,6 +1,7 @@
 package ru.levelp.client;
 
 import ru.levelp.json_serializator.JsonSerializator;
+import ru.levelp.managers.HibernateManager;
 import ru.levelp.message.Message;
 
 import java.io.BufferedReader;
@@ -17,6 +18,7 @@ public class ClientExample {
         public static final String IP = "127.0.0.1";
         public static final int PORT = 7071;
         public static void main(String[] args){
+
             try {
                 Socket socket = new Socket(IP, PORT);
                 PrintWriter writer = new PrintWriter(socket.getOutputStream());
