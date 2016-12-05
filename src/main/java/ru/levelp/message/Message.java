@@ -12,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "chat_messages")
+@org.mongodb.morphia.annotations.Entity("messages")
 
 /**
  * Created by Tanya on 27.11.2016.
@@ -20,7 +21,8 @@ public class Message implements Serializable {
     @Id
     @Column(name="id_chat_message")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @org.mongodb.morphia.annotations.Id
+    private long id;// для morphia самой нужно уникальное число выбрать
     @Column(name = "login")
     @Expose
     private String login;

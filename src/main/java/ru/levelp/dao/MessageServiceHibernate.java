@@ -1,10 +1,11 @@
-package ru.levelp.message;
+package ru.levelp.dao;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import ru.levelp.json_serializator.JsonSerializator;
 import ru.levelp.managers.HibernateManager;
+import ru.levelp.message.Message;
 import ru.levelp.server.ServerExample;
 
 import java.util.List;
@@ -12,10 +13,10 @@ import java.util.List;
 /**
  * Created by Tanya on 01.12.2016.
  */
-public class MessageService {
+public class MessageServiceHibernate {
     private Session session;
 
-    public MessageService() {
+    public MessageServiceHibernate() {
         this.session = HibernateManager.getInstance().getSession();
     }
 
