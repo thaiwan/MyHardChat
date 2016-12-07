@@ -3,14 +3,10 @@ package ru.levelp.server;
 import java.io.*;
 import java.net.Socket;
 
-import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
+import ru.levelp.dao.MessageServiceMongo;
 import ru.levelp.json_serializator.JsonSerializator;
 import ru.levelp.message.Message;
-import ru.levelp.message.MessageService;
-
-import static java.lang.System.in;
-import static java.lang.System.setOut;
+import ru.levelp.dao.MessageServiceHibernate;
 
 /**
  * Created by Tanya on 26.11.2016.
@@ -44,16 +40,20 @@ public class ClientHandler extends Thread {
                     server.writeClientsMap(userMessage.getLogin(), this);
                 }
                 if ((userMessage.getReceiver().equals("server")) && (userMessage.getBody().equals("get HM"))) {
-                    new MessageService().getMessagesByLogin(userMessage.getLogin());
+//                    new MessageServiceHibernate().getMessagesByLogin(userMessage.getLogin());
+                    new MessageServiceMongo().getMessagesByLogin(userMessage.getLogin());
                 }
                 if (userMessage.getReceiver().equals("") && (!(userMessage.getBody().equals("authorizationMessage")))) {
                     server.sendToAll(inputMessage, this);
-                    new MessageService().addMassage(userMessage);
+//                    new MessageServiceHibernate().addMassage(userMessage);
+                    new MessageServiceMongo().addMessage(userMessage);
 
                 } if((!userMessage.getReceiver().equals("")) && (!userMessage.getBody().equals("authorizationMessage")) &&
                         (!userMessage.getBody().equals("get HM"))) {
                     server.sendToOne(inputMessage, userMessage.getReceiver());
-                    new MessageService().addMassage(userMessage);
+//                    new MessageServiceHibernate().addMassage(userMessage);
+                    new MessageServiceMongo().addMessage(userMessage);
+
                 }
             }
             server.disconnectClient(this);

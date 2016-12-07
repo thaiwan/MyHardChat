@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Created by Tanya on 01.12.2016.
  */
-public class MessageServiceHibernate {
+public class MessageServiceHibernate implements MessageDAO {
     private Session session;
 
     public MessageServiceHibernate() {
         this.session = HibernateManager.getInstance().getSession();
     }
 
-    public void addMassage(Message message) {
+    public void addMessage(Message message) {
         session.beginTransaction();
         System.out.println("begin saving + message - " + message);
         session.save(message);
@@ -29,7 +29,7 @@ public class MessageServiceHibernate {
 
     public void getMessagesByLogin(String login) {
         List<Message> messages = session.createCriteria(Message.class)
-                .add(Restrictions.eq("login", login))
+                .add(Restrictions.eq(MessageDAO.FIELD_LOGIN, login))
                 .list();
         for (Message message : messages) {
             new ServerExample().sendToOne(new JsonSerializator().serializeToJson(message), login);
